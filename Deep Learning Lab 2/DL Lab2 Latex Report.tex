@@ -1,0 +1,386 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,longtable}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\setlist{nosep}
+
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  breakatwhitespace=false,
+  columns=fullflexible,
+  frame=single,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{teal}
+}
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{Shiv Nadar University Chennai}}\\
+\textbf{CS3807 -- Deep Learning Laboratory}\\
+\textbf{Experiment 2}\\
+{\large\textbf{Implementation of a Multi-Layer Perceptron (MLP) for Multi-Class Image Classification}}
+\end{center}
+
+\renewcommand{\arraystretch}{1.25}
+
+\begin{tabular}{|p{3.8cm}|p{8cm}|p{2cm}|}
+\hline
+Degree \& Branch & B.Tech Artificial Intelligence \& Data Science & Semester V\\ \hline
+Subject Code \& Name & CS3807 -- Deep Learning Laboratory & AY: 2026--27\\ \hline
+\end{tabular}
+
+\section*{1. Objective}
+Implement an MLP using TensorFlow/Keras on the Fashion-MNIST dataset. Learn image preprocessing, flattening, model construction, training, evaluation, and automated hyperparameter optimization.
+
+\section*{2. Background Theory}
+An MLP consists of an input layer, hidden layers and an output layer.
+
+\[
+z^{(l)}=W^{(l)}a^{(l-1)}+b^{(l)},\qquad
+a^{(l)}=f(z^{(l)})
+\]
+
+Output layer:
+\[
+\hat y=\mathrm{Softmax}(z)
+\]
+
+Loss:
+\[
+L=-\sum_i y_i\log(\hat y_i)
+\]
+
+Baseline architecture used:
+
+\begin{center}
+784 $\rightarrow$ Dense(128, ReLU) $\rightarrow$ Dense(64, ReLU) $\rightarrow$ Dense(10, Softmax)
+\end{center}
+
+Fashion-MNIST images are stored as $28\times28$ matrices. Dense layers require a one-dimensional feature vector, so each image is flattened ($28\times28=784$), pixel values are normalized to $[0,1]$, and labels are converted into one-hot vectors.
+
+\section*{3. Dataset}
+Dataset: Fashion-MNIST
+
+Training Images: 60,000 \\
+Testing Images: 10,000 \\
+Classes: 10 \\
+Image Size: $28\times28$
+
+\section*{4. Experimental Procedure}
+
+\textbf{Task 1: Dataset Exploration}
+
+The dataset was loaded using \texttt{keras.datasets.fashion\_mnist}. The printed shapes confirmed 60,000 training images and 10,000 testing images, each $28\times28$, across 10 classes. Ten sample images and the class distribution were plotted (see Section 7, Figures 1--2).
+
+\bigskip
+
+\textbf{Task 2: Data Preprocessing}
+
+Images were flattened from $(28,28)$ to $(784,)$ and pixel values normalized from $[0,255]$ to $[0,1]$. Labels were one-hot encoded to shape $(N,10)$.
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+\hline
+Stage & x\_train shape & y\_train shape\\
+\hline
+Before preprocessing & (60000, 28, 28) & (60000,)\\
+After flatten + normalize & (60000, 784) & --\\
+After one-hot encoding & -- & (60000, 10)\\
+\hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\textbf{Task 3: Model Construction}
+
+Baseline architecture: Input(784) $\rightarrow$ Dense(128, ReLU) $\rightarrow$ Dense(64, ReLU) $\rightarrow$ Dense(10, Softmax).
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+\hline
+Layer & Output Shape & Parameters\\
+\hline
+Dense (ReLU) & (None, 128) & 100,480\\
+Dense\_1 (ReLU) & (None, 64) & 8,256\\
+Dense\_2 (Softmax) & (None, 10) & 650\\
+\hline
+\end{tabular}
+\end{center}
+
+Total trainable parameters: 109,386.
+
+\bigskip
+
+\textbf{Task 4: Model Training}
+
+The baseline model was compiled with the Adam optimizer, categorical cross-entropy loss, and accuracy metric, and trained for 20 epochs with batch size 32 and a 10\% validation split. Training and validation accuracy/loss curves are shown in Section 7 (Figures 3--6).
+
+\bigskip
+
+\textbf{Task 5: Model Evaluation}
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+Metric & Value\\
+\hline
+Accuracy & 0.8837\\
+Precision (macro) & 0.8854\\
+Recall (macro) & 0.8837\\
+F1-score (macro) & 0.8828\\
+\hline
+\end{tabular}
+\end{center}
+
+Per-class classification report (test set):
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+Class & Precision & Recall & F1-score\\
+\hline
+T-shirt/top & 0.82 & 0.85 & 0.83\\
+Trouser & 0.98 & 0.98 & 0.98\\
+Pullover & 0.82 & 0.75 & 0.78\\
+Dress & 0.88 & 0.89 & 0.89\\
+Coat & 0.72 & 0.89 & 0.79\\
+Sandal & 0.98 & 0.96 & 0.97\\
+Shirt & 0.77 & 0.64 & 0.70\\
+Sneaker & 0.95 & 0.96 & 0.95\\
+Bag & 0.98 & 0.97 & 0.97\\
+Ankle boot & 0.95 & 0.96 & 0.96\\
+\hline
+\end{tabular}
+\end{center}
+
+The confusion matrix is shown in Section 7 (Figure 7).
+
+\section*{5. Source Code}
+The complete implementation (data loading, EDA, preprocessing, the multi-layer Perceptron construction, training loop, evaluation, and hyper-parameter optimization) is available at the following GitHub repository:
+
+\begin{center}
+% TODO: replace with your actual GitHub link
+\url{https://github.com/PolarFox08/Deep-Learning-Lab/tree/main/Deep%20Learning%20Lab%202}
+\end{center}
+
+
+\section*{6. Hyperparameter Optimization}
+
+Automated hyperparameter optimization was performed using \textbf{RandomizedSearchCV} together with the SciKeras \texttt{KerasClassifier} wrapper, using 5-fold cross-validation with $n\_iter=10$ sampled combinations.
+
+Search space used:
+
+\begin{center}
+\begin{tabular}{|p{5cm}|p{7cm}|}
+\hline
+Hyperparameter & Candidate Values\\
+\hline
+Hidden Layers & 1, 2, 3\\
+Hidden Neurons & 32, 64, 128, 256\\
+Learning Rate & 0.1, 0.01, 0.001\\
+Batch Size & 16, 32, 64, 128\\
+Epochs & 10, 20, 30\\
+Optimizer & SGD, Adam, RMSProp\\
+Activation Function & ReLU, Tanh, Sigmoid\\
+Dropout Rate & 0.0, 0.2, 0.5\\
+\hline
+\end{tabular}
+\end{center}
+
+The best configuration found and its cross-validation accuracy are reported in Section 7 below. The optimized model was retrained on the full 60,000-image training set using this configuration and evaluated on the 10,000-image test set.
+
+\section*{7. Results}
+
+\textbf{Best Hyperparameters}
+
+\begin{center}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+Hidden Layers & 2\\\hline
+Hidden Neurons & 32\\\hline
+Learning Rate & 0.1\\\hline
+Batch Size & 16\\\hline
+Optimizer & SGD\\\hline
+Activation Function & Tanh\\\hline
+Epochs & 20\\\hline
+Dropout & 0.2\\\hline
+Cross-validation Accuracy & 0.8681\\\hline
+Testing Accuracy & 0.8526\\\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+
+\textbf{Performance Comparison}
+
+\begin{center}
+\begin{tabular}{|p{4cm}|c|c|}
+\hline
+Metric & Baseline & Optimized\\
+\hline
+Accuracy & 0.8837 & 0.8526\\
+Precision & 0.8854 & 0.8631\\
+Recall & 0.8837 & 0.8526\\
+F1-score & 0.8828 & 0.8555\\
+Training Time & Not recorded & Not recorded\\
+\hline
+\end{tabular}
+\end{center}
+
+\section*{8. Plots with Inference}
+
+\begin{center}
+\includegraphics[width=0.75\textwidth]{plots/01_sample_images.png}
+\end{center}
+\textbf{Figure 1: Sample Images.} \emph{Inference:} The ten sampled training images show visually distinct silhouettes for classes such as Trouser and Sneaker, while upper-body garments (Shirt, Pullover, Coat) share a similar boxy outline. This visual overlap between upper-body classes foreshadows the confusion seen later in the confusion matrix.
+
+\bigskip
+\begin{center}
+\includegraphics[width=0.7\textwidth]{plots/02_class_distribution.png}
+\end{center}
+\textbf{Figure 2: Class Distribution.} \emph{Inference:} All 10 classes contain exactly 6,000 training images each, confirming the dataset is perfectly balanced. This means accuracy is a fair aggregate metric and no class re-weighting is required.
+
+\bigskip
+\begin{center}
+\includegraphics[width=0.65\textwidth]{plots/03_train_accuracy.png}
+\end{center}
+\textbf{Figure 3: Training Accuracy vs Epoch.} \emph{Inference:} Training accuracy rises steadily from about 0.82 to 0.935 over 20 epochs with no oscillation, showing the model consistently fits the training data better each epoch, with the rate of improvement slowing in the later epochs.
+
+\bigskip
+\begin{center}
+\includegraphics[width=0.65\textwidth]{plots/04_val_accuracy.png}
+\end{center}
+\textbf{Figure 4: Validation Accuracy vs Epoch.} \emph{Inference:} Validation accuracy rises quickly to about 0.89 by epoch 10 and then fluctuates in a narrow 0.885--0.891 band for the remaining epochs, indicating generalization performance largely saturates well before training ends.
+
+\bigskip
+\begin{center}
+\includegraphics[width=0.65\textwidth]{plots/05_train_loss.png}
+\end{center}
+\textbf{Figure 5: Training Loss vs Epoch.} \emph{Inference:} Training loss decreases smoothly and monotonically from about 0.50 to 0.175 across the 20 epochs, mirroring the rising training-accuracy curve with no signs of instability.
+
+\bigskip
+\begin{center}
+\includegraphics[width=0.65\textwidth]{plots/06_val_loss.png}
+\end{center}
+\textbf{Figure 6: Validation Loss vs Epoch.} \emph{Inference:} Validation loss drops from about 0.40 to a minimum near 0.305 around epoch 10, then rises again toward the end of training even though validation accuracy stays roughly flat, a mild early indication of overfitting beginning in the later epochs.
+
+\bigskip
+\begin{center}
+\includegraphics[width=0.6\textwidth]{plots/07_confusion_matrix.png}
+\end{center}
+\textbf{Figure 7: Confusion Matrix.} \emph{Inference:} The Shirt class has the lowest recall (0.64) and is most often confused with T-shirt/top, Pullover and Coat, consistent with the classification report. Trouser, Sandal, Sneaker, Bag and Ankle boot form a tight, near-diagonal cluster with very few off-diagonal errors, showing the model separates footwear and accessories almost perfectly while upper-body garments remain the dominant source of confusion.
+
+\bigskip
+\begin{center}
+\includegraphics[width=0.6\textwidth]{plots/08_hp_search.png}
+\end{center}
+\textbf{Figure 8: Hyperparameter Search Results.} \emph{Inference:} Mean CV accuracy across the sampled candidates rises sharply from about 0.14 for the worst combination to roughly 0.85--0.87 for the majority of candidates, then plateaus. This shows the search space contains a small number of poorly-performing combinations (likely mismatched learning-rate/optimizer pairs) while most sampled combinations converge to a similar, near-optimal accuracy region.
+
+\bigskip
+\begin{center}
+\includegraphics[width=0.55\textwidth]{plots/09_best_model_comparison.png}
+\end{center}
+\textbf{Figure 9: Best Model Accuracy Comparison.} \emph{Inference:} The baseline MLP (0.8837) achieved a visibly higher test accuracy than the optimized MLP (0.8526), a gap of about 3 percentage points, showing that the hyperparameter search did not translate into a better-generalizing model on the held-out test set in this run.
+
+\section*{9. Discussion}
+
+\textbf{1. Which optimization method was used?}\\
+RandomizedSearchCV from scikit-learn, combined with the SciKeras \texttt{KerasClassifier} wrapper, using 5-fold cross-validation with $n\_iter=10$ sampled combinations. Randomized Search was used instead of an exhaustive Grid Search because the full search space (3,888 combinations) would require 19,440 model fits under 5-fold CV, which is impractical.
+
+\textbf{2. Which hyperparameters were selected?}\\
+The best configuration found was: 2 hidden layers, 32 neurons per layer, Tanh activation, SGD optimizer with learning rate 0.1, batch size 16, dropout 0.2, trained for 20 epochs, achieving a mean 5-fold cross-validation accuracy of 0.8681.
+
+\textbf{3. Did optimization improve performance?}\\
+No. On the held-out test set the optimized model (0.8526 accuracy) scored below the baseline (0.8837 accuracy), even though its cross-validation accuracy during the search (0.8681) was reasonably high. This suggests the small, shallower, dropout-regularized configuration found by the search generalized slightly worse to the full test set than the simple 128-64 baseline in this particular run.
+
+\textbf{4. Which hyperparameter had the greatest impact?}\\
+Based on the hyperparameter search results plot, accuracy jumps sharply between the single worst candidate (around 0.14 mean CV accuracy) and the rest of the candidates (0.85 and above), suggesting that an unsuitable learning-rate/optimizer pairing was responsible for the one poor outlier, while the remaining hyperparameters had comparatively little effect once a workable learning rate and optimizer were chosen.
+
+\textbf{5. Compare Grid Search and Randomized Search.}\\
+Grid Search exhaustively evaluates every combination in the search space, guaranteeing the best combination within the grid is found, but its cost grows multiplicatively with the number of hyperparameters (3,888 combinations here). Randomized Search instead samples a fixed, user-chosen number of combinations, trading the guarantee of finding the grid's global best for a fixed and controllable search cost, which made it the practical choice for this 8-dimensional search space.
+
+\textbf{6. Recommend the best MLP configuration.}\\
+Based on the results obtained in this run, the baseline architecture (784 $\rightarrow$ Dense(128, ReLU) $\rightarrow$ Dense(64, ReLU) $\rightarrow$ Dense(10, Softmax), Adam optimizer, 20 epochs, batch size 32) is recommended, since it achieved the higher test accuracy (0.8837 vs 0.8526) among the two models evaluated.
+
+
+% ------------------------------------------------------------------------------
+% 4. XOR GATE (MLP IMPLEMENTATION)
+% ------------------------------------------------------------------------------
+\section*{10. XOR Gate (Multi-Layer Perceptron)}
+
+\textbf{Epoch-wise Loss Trajectory}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Epoch & Mean Squared Error (MSE) & Training Status\\
+\hline
+2000 & 0.00984 & Learning Hidden Features\\
+\hline
+4000 & 0.00208 & Refining Boundary\\
+\hline
+6000 & 0.00112 & Loss Steadily Decreasing\\
+\hline
+8000 & 0.00076 & Approaching Convergence\\
+\hline
+10000 & 0.00057 & Fully Converged\\
+\hline
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+
+\textbf{XOR Model Predictions \& Summary}
+
+\begin{center}
+\begin{tabular}{|p{6cm}|p{7cm}|}
+\hline
+Input Samples & $[[0,0],\ [0,1],\ [1,0],\ [1,1]]$\\
+\hline
+Target Outputs & $[0,\ 1,\ 1,\ 0]$\\
+\hline
+Model Raw Predictions & $[[0.023],\ [0.974],\ [0.974],\ [0.021]]$\\
+\hline
+Rounded Output Class & $[0,\ 1,\ 1,\ 0]$\\
+\hline
+Final MSE Loss & $0.00057$\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{figure}[htbp]
+    \centering
+    % TODO: Replace 'xor_mlp_plots.png' with your actual plot image filename
+    \includegraphics[width=0.85\textwidth]{plots/xor_mlp_plots.png}
+    \caption{Non-linear curved decision boundary produced by the Multi-Layer Perceptron to separate XOR inputs.}
+    \label{fig:xor_gate_plot}
+\end{figure}
+
+\textbf{Inference:} A single-layer perceptron fails on XOR because the inputs are non-linearly separable. Introducing a hidden layer allows the Multi-Layer Perceptron (MLP) to transform the feature space and construct a non-linear decision boundary. The MSE loss steadily decreased across 10,000 epochs down to $0.00057$, resulting in predictions ($0.023 \approx 0$ and $0.974 \approx 1$) that perfectly match the XOR truth table.
+\clearpage
+%------------------------------------------------------------------------
+
+
+\section*{11. Conclusion}
+A baseline MLP (784-128-64-10) was implemented, trained for 20 epochs, and evaluated on the Fashion-MNIST test set, achieving 0.8837 accuracy. Automated hyperparameter optimization was then performed using RandomizedSearchCV with 5-fold cross-validation over an 8-dimensional search space. The resulting optimized model (2 hidden layers of 32 Tanh units, SGD, learning rate 0.1, dropout 0.2) reached a cross-validation accuracy of 0.8681 during the search but only 0.8526 on the full test set after retraining, underperforming the baseline by about 3 percentage points. The confusion matrix shows that upper-body garment classes (Shirt, T-shirt/top, Pullover, Coat) remain the dominant source of misclassification for a flatten-and-dense MLP, which does not exploit the spatial structure of the images. Overall, the experiment demonstrates both the mechanics of automated hyperparameter search with SciKeras and the practical lesson that a randomly-sampled search is not guaranteed to outperform a well-chosen manual baseline.
+
+\section*{12. References}
+\begin{enumerate}
+\item Goodfellow et al., \emph{Deep Learning}.
+\item Bishop, \emph{Pattern Recognition and Machine Learning}.
+\item Haykin, \emph{Neural Networks and Learning Machines}.
+\item Fashion-MNIST Dataset.
+\item TensorFlow/Keras Documentation.
+\end{enumerate}
+
+\end{document}
