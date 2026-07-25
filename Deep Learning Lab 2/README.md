@@ -9,11 +9,10 @@ hyperparameter optimization with RandomizedSearchCV + SciKeras.
 
 | File | Description |
 |---|---|
-| `mlp_fashion_mnist.py` | Main script: loads data, builds/trains/evaluates the baseline MLP, runs hyperparameter search, retrains and evaluates the optimized model, saves all plots and results. |
-| `data_loader.py` | Helper module that loads the Fashion-MNIST `.gz` files into NumPy arrays. |
-| `Experiment2_MLP_Fashion_MNIST.ipynb` | Same workflow as the `.py` script, organized as a Jupyter notebook with one section per task. |
-| `Experiment_2.tex` | Lab report (LaTeX source) with theory, procedure, results, plots with inference, and discussion. |
-| `Experiment2_Lab_Record.docx` | Lab report as a Word document. |
+| `DL2_MLP_Fashion_MNIST.ipynb` | Jupyter notebook: loads data, builds/trains/evaluates the baseline MLP, runs hyperparameter search, retrains and evaluates the optimized model. |
+| `DL_Lab_2_XOR_gate.ipynb` | Jupyter notebook implementing MLP for XOR gate. |
+| `DL Lab2 Latex Report.tex` | Lab report (LaTeX source) with theory, procedure, results, plots with inference, and discussion. |
+| `DL_Lab_2.pdf` | Lab report as a PDF document. |
 | `requirements.txt` | Python package dependencies. |
 | `DATASET_INFO.md` | Details about the Fashion-MNIST dataset and how it is obtained. |
 | `EXECUTION_INSTRUCTIONS.md` | Step-by-step instructions to set up and run the project. |
@@ -21,12 +20,13 @@ hyperparameter optimization with RandomizedSearchCV + SciKeras.
 ## Quick Start
 
 ```bash
+git clone https://github.com/PolarFox08/Deep-Learning-Lab.git
+cd Deep-Learning-Lab/"Deep Learning Lab 2"
 pip install -r requirements.txt
-python mlp_fashion_mnist.py
+jupyter notebook
 ```
 
-See `EXECUTION_INSTRUCTIONS.md` for full setup details and `DATASET_INFO.md`
-for information on how the dataset is loaded.
+See [EXECUTION_INSTRUCTIONS.md](file:///c:/Users/uvais/Downloads/Deep%20Learning%20Lab/Deep%20Learning%20Lab%202/EXECUTION_INSTRUCTIONS.md) for full setup details and `DATASET_INFO.md` for information on how the dataset is loaded.
 
 ## What the code does
 

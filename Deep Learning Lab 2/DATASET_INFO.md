@@ -32,13 +32,4 @@ benchmark for image classification algorithms.
 |8|Bag|
 |9|Ankle boot|
 
-```
-
-These files can be obtained from the official Zalando Research repository:
-https://github.com/zalandoresearch/fashion-mnist (see the `data/fashion/`
-folder), and should be placed in a local `data/` directory before running
-`mlp\_fashion\_mnist.py`. The byte format and image content are identical to
-the version served by `keras.datasets.fashion\_mnist`.
-
-## 
-
+The dataset is automatically downloaded and cached when loading it using `keras.datasets.fashion_mnist` inside the notebook, so no manual download or setup is required.

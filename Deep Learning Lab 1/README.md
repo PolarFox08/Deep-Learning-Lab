@@ -8,11 +8,13 @@ The perceptron classifies banknotes as **authentic** or **forged** using four nu
 
 | File | Description |
 |---|---|
-| `DL_Lab_1.ipynb` | Full notebook: EDA, preprocessing, from-scratch Perceptron, training, evaluation, learning-rate comparison, sklearn comparison |
+| `DL_Lab_1_Perceptron.ipynb` | Full notebook: EDA, preprocessing, from-scratch Perceptron, training, evaluation, learning-rate comparison, sklearn comparison |
+| `DL_Lab1_Gates.ipynb` | Perceptron implementation for logic gates (AND, OR, NOT) |
 | `data_banknote_authentication.csv` | Local copy of the dataset (see `DATASET.md`) |
 | `requirements.txt` | Python dependencies |
 | `DATASET.md` | Dataset description and source |
 | `EXECUTION.md` | Setup and run instructions |
+
 
 ## What's implemented
 
@@ -52,13 +54,13 @@ The small difference is expected — scikit-learn's `Perceptron` shuffles traini
 ## Quick start
 
 ```bash
-git clone <your-repo-url>
-cd <your-repo>
+git clone https://github.com/PolarFox08/Deep-Learning-Lab.git
+cd Deep-Learning-Lab/"Deep Learning Lab 1"
 pip install -r requirements.txt
-jupyter notebook DL_Lab_1.ipynb
+jupyter notebook
 ```
 
-See `EXECUTION.md` for full setup instructions and `DATASET.md` for dataset details.
+See [EXECUTION.md](file:///c:/Users/uvais/Downloads/Deep%20Learning%20Lab/Deep%20Learning%20Lab%201/EXECUTION.md) for full setup instructions and `DATASET.md` for dataset details.
 
 ## References
 
