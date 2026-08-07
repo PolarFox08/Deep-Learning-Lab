@@ -6,6 +6,7 @@ This repository contains the code implementations, datasets, and reports for my 
 
 * [Deep Learning Lab 1](./Deep%20Learning%20Lab%201/) — Single Layer Perceptron (Logic Gates & Banknote Authentication)
 * [Deep Learning Lab 2](./Deep%20Learning%20Lab%202/) — Multi-Layer Perceptron (XOR Gate & Fashion-MNIST Classification)
+* [Deep Learning Lab 3](./Deep%20Learning%20Lab%203/) — Convolutional Neural Networks (CIFAR-10 dataset Image Classification)
 
 ## How to Run
 
