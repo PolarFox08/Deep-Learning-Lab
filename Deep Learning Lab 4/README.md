@@ -11,7 +11,7 @@ This lab studies the evolution of deep CNN architectures (LeNet-5, AlexNet, VGG1
 ## Contents
 
 * `DL_Lab_4.ipynb` -- Main notebook: dataset loading/EDA, VGG16 transfer-learning setup (frozen base), model training, fine tuning (unfreezing the last convolution block), evaluation (accuracy, precision, recall, F1, confusion matrix, classification report), and a hyperparameter grid-search study.
-* `DL_Lab4_Latex_Report.tex` -- LaTeX lab report.
+* `Experiment_4.tex` -- LaTeX lab report.
 * `DATASET_INFO.md` -- Details on the CIFAR-10 dataset and how to obtain it.
 * `EXECUTION_INSTRUCTIONS.md` -- Steps to set up and run the notebook.
 * `requirements.txt` -- Python dependencies.
