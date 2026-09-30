@@ -10,6 +10,7 @@ This repository contains the code implementations, datasets, and reports for my 
 * [Deep Learning Lab 4](./Deep%20Learning%20Lab%204/) — Transfer Learning and HyperParameter study on Revolutionary Models 
 * [Deep Learning Lab 5](./Deep%20Learning%20Lab%205/) — Comprehensive Study of CNN Training, Regularization, Optimization, Hyperparameter Tuning, Transfer Learning and Cross-Validation (MobileNetV2 on Oxford-IIIT Pet Dataset)
 * [Deep Learning Lab 6](./Deep%20Learning%20Lab%206/) — End-to-End Study of RNN, LSTM and GRU for Sequence Learning and Video Understanding
+* [Deep Learning Lab 7](./Deep%20Learning%20Lab%207/) — End-to-End Study of Autoencoders, Convolutional Autoencoders, Denoising Autoencoders and Variational Autoencoders
 
 ## How to Run
 
