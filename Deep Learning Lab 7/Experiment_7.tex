@@ -1138,22 +1138,25 @@ same denoising architecture.}
 \end{center}
 
 Inference: As noise level increases, denoised SSIM decreases gradually while MSE increases.  Salt-Pepper produces more corruption as seen from the high noisy MSE values but because of this it also gives the higher gain than gaussian noise. Overall, the model is able to reconstruct the images very well given any degree of noise level of gaussian and salt-pepper. 
+
 \begin{table}[htbp]
 \centering
 \caption{Gaussian vs. Salt-and-Pepper Noise: Metrics Against Clean Images}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{l c c c c c c c}
 \hline
 \textbf{Noise Type} & \textbf{Level} & \textbf{Noisy MSE} & \textbf{Noisy SSIM} &
 \textbf{Denoised MSE} & \textbf{Denoised MAE} & \textbf{Denoised SSIM} & \textbf{SSIM Gain} \\
 \hline
-Gaussian     & 0.10 & 0.0054 & 0.6932 & 0.0029 & 0.0164 & 0.9676 & 0.2744 \\
-Gaussian     & 0.20 & 0.0212 & 0.6094 & 0.0042 & 0.0203 & 0.9501 & 0.3407 \\
-Gaussian     & 0.30 & 0.0466 & 0.5248 & 0.0064 & 0.0256 & 0.9232 & 0.3984 \\
-Salt-Pepper  & 0.05 & 0.0240 & 0.7193 & 0.0037 & 0.0182 & 0.9601 & 0.2408 \\
-Salt-Pepper  & 0.10 & 0.0481 & 0.5932 & 0.0045 & 0.0203 & 0.9507 & 0.3574 \\
-Salt-Pepper  & 0.20 & 0.0966 & 0.4608 & 0.0069 & 0.0265 & 0.9228 & 0.4620 \\
+Gaussian    & 0.10 & 0.0054 & 0.6932 & 0.0029 & 0.0164 & 0.9676 & 0.2744 \\
+Gaussian    & 0.20 & 0.0212 & 0.6094 & 0.0042 & 0.0203 & 0.9501 & 0.3407 \\
+Gaussian    & 0.30 & 0.0466 & 0.5248 & 0.0064 & 0.0256 & 0.9232 & 0.3984 \\
+Salt-Pepper & 0.05 & 0.0240 & 0.7193 & 0.0037 & 0.0182 & 0.9601 & 0.2408 \\
+Salt-Pepper & 0.10 & 0.0481 & 0.5932 & 0.0045 & 0.0203 & 0.9507 & 0.3574 \\
+Salt-Pepper & 0.20 & 0.0966 & 0.4608 & 0.0069 & 0.0265 & 0.9228 & 0.4620 \\
 \hline
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 \item \textbf{Train the denoising autoencoder using two different noise
@@ -1234,6 +1237,7 @@ Increasing the latent dimension from 2 to 8 substantially improves reconstructio
 \begin{table}[htbp]
 \centering
 \caption{VAE Comparison for Different Latent Dimensions}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{c c c c c c c c c c}
 \hline
 \textbf{Latent Dim.} & \textbf{Recon Loss} & \textbf{KL Loss} & \textbf{Total Loss} &
@@ -1243,7 +1247,8 @@ Increasing the latent dimension from 2 to 8 substantially improves reconstructio
 2 & 149.7670 & 5.4152 & 155.1822 & 0.0439 & 0.1049 & 0.5064 & 141189 & 2 & 28.5 \\
 8 & 105.9217 & 15.6893 & 121.6110 & 0.0246 & 0.0639 & 0.7288 & 141489 & 7 & 29.5 \\
 \hline
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 \begin{table}[htbp]
